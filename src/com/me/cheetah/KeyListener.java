@@ -50,12 +50,6 @@ public class KeyListener implements InputProcessor {
 	public boolean scrolled(int amount) {
 		return false;
 	}
-	public void tick(){
-		 if(Gdx.input.isKeyPressed(Keys.LEFT) || Gdx.input.isKeyPressed(Keys.Q)) {
-			 
-		 }
-		 if(Gdx.input.isKeyPressed(Keys.RIGHT) || Gdx.input.isKeyPressed(Keys.D)) {
-			 
-		 }
+	
 	}
-}
+

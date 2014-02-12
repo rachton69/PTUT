@@ -1,11 +1,12 @@
 package com.me.cheetah;
-//test
+
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
+//import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.Stage;
+//import com.badlogic.gdx.scenes.scene2d.Stage;
 
 
 public class Cheetah implements ApplicationListener {
@@ -13,20 +14,26 @@ public class Cheetah implements ApplicationListener {
 	private SpriteBatch batch;
 	private Texture texture;
 	private Personnage cheetah;
-	private Stage stage;
+	//private Stage stage;
     private static Cheetah instance;
     private KeyListener KeyListener;
+   // private Region map;
+    //private OrthographicCamera camera;
+	private Map maMap;
+	
 	
 	
 	@Override
 	public void create() {	
 		KeyListener= new KeyListener();
 		Gdx.input.setInputProcessor(KeyListener);
-		float w = Gdx.graphics.getWidth();
-		float h = Gdx.graphics.getHeight();
+		//float w = Gdx.graphics.getWidth();
+		//float h = Gdx.graphics.getHeight();
 		cheetah = new Personnage();
-
+		//map= new Region(1,"Stage1");
 		batch = new SpriteBatch();
+		//camera = new OrthographicCamera (480, 320);
+		maMap = new Map();
 		
 		/*		
         //Create a touchpad skin    
@@ -62,14 +69,17 @@ public class Cheetah implements ApplicationListener {
 	}
  
 	@Override
-	public void render() {		
-		Gdx.gl.glClearColor(1, 1, 1, 1);
+	public void render() {	
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		/*stage.act(Gdx.graphics.getDeltaTime());            
         stage.draw();
 		cheetah.avancer(touchpad.getKnobPercentX()*100);*/
-		KeyListener.tick();
+
 		batch.begin();
+		//map.render(camera, batch);
+		maMap.dessiner(batch);
+		cheetah.dessiner(batch);
+		cheetah.tick();
 		cheetah.dessiner(batch);
 		batch.end();
 	}
@@ -89,8 +99,16 @@ public class Cheetah implements ApplicationListener {
 	public void quit() {
 		Gdx.app.exit();
 	}
-	
+
 	public static Cheetah getInstance() {
 		return instance;
 	}
+	public SpriteBatch getBatch() {
+		return batch;
+	}
+		
+
+	/*public Region getRegion(){
+		return map;
+	}*/
 }

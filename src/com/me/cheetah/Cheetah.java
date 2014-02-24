@@ -1,12 +1,20 @@
 package com.me.cheetah;
 
+import java.awt.Color;
+import java.awt.Rectangle;
+
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 //import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 //import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 
 
 public class Cheetah implements ApplicationListener {
@@ -20,6 +28,14 @@ public class Cheetah implements ApplicationListener {
    // private Region map;
     //private OrthographicCamera camera;
 	private Map maMap;
+	private ApplicationListener music;
+	  private World world;
+	  private OrthographicCamera cam;
+	 
+	    /** Pour fin de débogage **/
+	    ShapeRenderer debugRenderer = new ShapeRenderer();
+		private BitmapFont font;
+		private CharSequence str;
 	
 	
 	
@@ -34,6 +50,16 @@ public class Cheetah implements ApplicationListener {
 		batch = new SpriteBatch();
 		//camera = new OrthographicCamera (480, 320);
 		maMap = new Map();
+		
+		//music
+		Music music;
+		music= Gdx.audio.newMusic(Gdx.files.internal("music.mp3"));
+		music.setLooping(true);
+		music.play();
+		
+		font = new BitmapFont();
+		
+
 		
 		/*		
         //Create a touchpad skin    
@@ -65,22 +91,26 @@ public class Cheetah implements ApplicationListener {
 	@Override
 	public void dispose() {
 		batch.dispose();
+		
+		
 		texture.dispose();
+		//music
+		music.dispose();
+		font.dispose();
 	}
  
 	@Override
 	public void render() {	
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-		/*stage.act(Gdx.graphics.getDeltaTime());            
-        stage.draw();
-		cheetah.avancer(touchpad.getKnobPercentX()*100);*/
-
 		batch.begin();
-		//map.render(camera, batch);
+		cheetah.dessiner(batch);
+		
 		maMap.dessiner(batch);
 		cheetah.dessiner(batch);
+		font.setColor(1.0f, 5f, 1.0f, 1.0f);
+		font.draw(batch, "Scores : ", 0, 5);
 		cheetah.tick();
-		cheetah.dessiner(batch);
+		
 		batch.end();
 	}
 
